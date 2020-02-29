@@ -20,24 +20,24 @@ public class Solution {
       return false;
     }
 
-    // **** sort the arrays (Quicksort: Ω(n log(n)) to O(n^2)) ****
+    // **** sort the arrays (Quicksort: O(n log(n))) ****
     Arrays.sort(arr1);
     Arrays.sort(arr2);
 
-    // // **** traverse the arrays checking if they do not match O(n) ****
-    // for (int i = 0; i < arr1.length; i++) {
-    //   if (arr1[i] != arr2[i]) {
-    //     return false;
-    //   }
-    // }
+    // **** traverse the arrays checking if they do not match O(n) ****
+    for (int i = 0; i < arr1.length; i++) {
+      if (arr1[i] != arr2[i]) {
+        return false;
+      }
+    }
 
     // **** these are permutations ****
-    return Arrays.equals(arr1, arr2);
+    return true;
   }
 
   /**
    * Determine if these arrays contain a permutation of each other.
-   * Use a hash map O(n)
+   * Use a hash map O(n).
    */
   static boolean isPermutationH(int[] arr1, int[] arr2) {
 
@@ -83,9 +83,10 @@ public class Solution {
 
   /**
    * Determine if these arrays contain a permutation of each other.
-   * Use Arrays class O(1).
-   * Depending if you are allowed you may use the Arrays.equal() method.
-   * In practice you would avoid calling this function and you using the Arrays method.
+   * Use Arrays class O(n).
+   * This approach may or may not work if the original set of arrays is used.
+   * The reason is that previous method calls may sort the arrays.
+   * The issue is not in this method, it is in the test scaffolding!!!
    */
   static boolean isPermutationE(int[] arr1, int[] arr2) {
     return Arrays.equals(arr1, arr2);
@@ -111,14 +112,38 @@ public class Solution {
                   .mapToInt(Integer::parseInt)
                   .toArray();
 
+    // **** make a copy of the arrays because they could have been altered by a previous method ****
+    int[] a1 = arr1.clone();
+    int[] a2 = arr2.clone();
+
     // **** determine if the sets of integers are permutations of each other (using Arrays class) ****
-    System.out.println("isPermutationA: " + isPermutationA(arr1, arr2));
+    System.out.println("isPermutationA: " + isPermutationA(a1, a2));
+
+    // ???? ????
+    System.out.println("main <<< a1: " + Arrays.toString(a1));
+    System.out.println("main <<< a2: " + Arrays.toString(a2));
+
+    // **** make a copy of the arrays because they could have been altered by a previous method ****
+    a1 = arr1.clone();
+    a2 = arr2.clone();
 
     // **** determine if the sets are permutations of each other (using a hash map) ****
-    System.out.println("isPermutationH: " + isPermutationH(arr1, arr2));
+    System.out.println("isPermutationH: " + isPermutationH(a1, a2));
+
+    // ???? ????
+    System.out.println("main <<< a1: " + Arrays.toString(a1));
+    System.out.println("main <<< a2: " + Arrays.toString(a2));
+
+    // **** make a copy of the arrays because they could have been altered by a previous method ****
+    a1 = arr1.clone();
+    a2 = arr2.clone();
 
     // **** determine if the sets are permutations of each other (using Arrays class) ****
-    System.out.println("isPermutationE: " + isPermutationE(arr1, arr2));
+    System.out.println("isPermutationE: " + isPermutationE(a1, a2));
+
+    // ???? ????
+    System.out.println("main <<< a1: " + Arrays.toString(a1));
+    System.out.println("main <<< a2: " + Arrays.toString(a2));
 
     // **** close the buffered reader ****
     br.close();
